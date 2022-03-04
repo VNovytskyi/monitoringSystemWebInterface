@@ -25,8 +25,11 @@
                 </div>
               </div>
               <div class="input-group mb-3">
-                <span class="input-group-text" style="width: 60px;">PASS</span>
+                <span id="pass-label" class="input-group-text" style="width: 60px;">PASS</span>
                 <input id="pass-input" type="password" class="form-control">
+                <div id="pass-error-block" class="invalid-feedback">
+                  <div id="pass-error-description"></div>
+                </div>
               </div>
             </div>
             <div class="input-group mb-3 justify-content-center">
@@ -54,16 +57,40 @@
     $("#ssid-error-block").removeClass("d-block")
   }
 
-  function checkSSIDname(name) {
-    if (name.length < 1|| name.length > 32) {
+  function checkSSIDname(str) {
+    if (str.length < 1|| str.length > 32) {
       return "The name length must be in the range: 1-32"
     }
 
-    if (/^[!#;].|[+\[\]/"\t\s].*$/.test(name)) {
+    if (/^[!#;].|[+\[\]/"\t\s].*$/.test(str)) {
       return "Detected forbidden symbol in name"
     }
 
     return ""
+  }
+
+  function setPasswordError(description) {
+    $("#pass-label").addClass("border-danger")
+    $("#pass-input").addClass("border-danger")
+    $("#pass-error-block").addClass("d-block")
+    $("#pass-error-description").text(description)
+  }
+
+  function clearPasswordError() {
+    $("#pass-label").removeClass("border-danger")
+    $("#pass-input").removeClass("border-danger")
+    $("#pass-error-block").removeClass("d-block")   
+  }
+
+  function checkPassword(str) {
+    if (str.length < 1) {
+      return {
+        type: "error",
+        title: "Password field can`t be empty!"
+      }
+    }
+
+    return {type: "", title: ""}
   }
 
   // Apply form fields
@@ -71,9 +98,21 @@
     const ssid = $("#ssid-input").val()
     const pass = $("#pass-input").val()
 
+    let failed = false
+
     const error = checkSSIDname(ssid)
     if (error.length) {
       setSSIDerror(error)
+      failed = true
+    }
+
+    const passError = checkPassword(pass);
+    if (passError.title.length) {
+      setPasswordError(passError.title)
+      failed = true
+    }
+
+    if (failed) {
       return
     }
    
@@ -89,6 +128,17 @@
       setSSIDerror(error)
     } else {
       clearSSIDerror()
+    }
+  })
+
+  // Check Password on 'input' event
+  $("#pass-input").on("input", () => {
+    const pass = $("#pass-input").val()
+    const error = checkPassword(pass)
+    if (error.title.length) {
+      setPasswordError(error.title)
+    } else {
+      clearPasswordError()
     }
   })
 </script>
