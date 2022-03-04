@@ -13,29 +13,47 @@
   <div class="container" style="height: 100vh">
       <div class="h-100 d-flex justify-content-center align-items-center">
         <div class="card" style="width: 400px;">
+          <div class="card-header ">
+            <h4 class="card-title d-flex justify-content-center">Basic configuration</h4>
+          </div>
           <div class="card-body">
-            <h4 class="card-title d-flex justify-content-center mb-4">Basic configuration</h4>
-            <h5 class="card-title d-flex">Wi-Fi settings</h5>
+            <h5 class="card-title d-flex">Super user</h5>
+            <div class="input-group mb-3">
+              <span id="name-label" class="input-group-text" style="width: 70px;">Name</span>
+              <input id="name-input" type="text" class="form-control" placeholder="Enter name of super user">
+              <div id="name-error-block" class="invalid-feedback">
+                <div id="name-error-description"></div>
+              </div>
+            </div>
+            <div class="input-group mb-4">
+              <span id="name-label" class="input-group-text" style="width: 70px;">PASS</span>
+              <input id="name-input" type="text" class="form-control" placeholder="Enter password of super user">
+              <div id="name-error-block" class="invalid-feedback">
+                <div id="name-error-description"></div>
+              </div>
+            </div>
+            <hr>
+            <h5 class="card-title d-flex">Wi-Fi</h5>
             <div class="mb-3 mt-3">
               <div class="input-group mb-3">
-                <span id="ssid-label" class="input-group-text" style="width: 60px;">SSID</span>
-                <input id="ssid-input" type="text" class="form-control">
+                <span id="ssid-label" class="input-group-text" style="width: 70px;">SSID</span>
+                <input id="ssid-input" type="text" class="form-control" placeholder="Enter name of access point">
                 <div id="ssid-error-block" class="invalid-feedback">
                   <div id="ssid-error-description"></div>
                 </div>
               </div>
               <div class="input-group mb-3">
-                <span id="pass-label" class="input-group-text" style="width: 60px;">PASS</span>
-                <input id="pass-input" type="password" class="form-control">
+                <span id="pass-label" class="input-group-text" style="width: 70px;">PASS</span>
+                <input id="pass-input" type="password" class="form-control" placeholder="Enter password of access point">
                 <div id="pass-error-block" class="invalid-feedback">
                   <div id="pass-error-description"></div>
                 </div>
               </div>
             </div>
+
             <div class="input-group mb-3 justify-content-center">
               <button id="apply-button" type="submit" class="btn btn-primary" style="width: 100px;">Apply</button>
             </div>
-            
           </div>
         </div>
       </div>
