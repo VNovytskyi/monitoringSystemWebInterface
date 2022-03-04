@@ -11,22 +11,26 @@
 <body>
   <div class="container" style="height: 100vh">
       <div class="h-100 d-flex justify-content-center align-items-center">
-        <form style="width: 400px;">
-          <div class="mb-3 mt-3">
-            <label for="email">Email:</label>
-            <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+        <div class="card" style="width: 400px;">
+          <div class="card-body">
+            <h4 class="card-title d-flex justify-content-center mb-4">Basic configuration</h4>
+            <h5 class="card-title d-flex">Wi-Fi settings</h5>
+            <div class="mb-3 mt-3">
+              <div class="input-group mb-3">
+                <span class="input-group-text" style="width: 60px;">SSID</span>
+                <input type="text" class="form-control">
+              </div>
+              <div class="input-group mb-3">
+                <span class="input-group-text" style="width: 60px;">PASS</span>
+                <input type="text" class="form-control">
+              </div>
+            </div>
+            <div class="input-group mb-3 justify-content-end">
+              <button type="submit" class="btn btn-primary">Next</button>
+            </div>
+            
           </div>
-          <div class="mb-3">
-            <label for="pwd">Password:</label>
-            <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd">
-          </div>
-          <div class="form-check mb-3">
-            <label class="form-check-label">
-              <input class="form-check-input" type="checkbox" name="remember"> Remember me
-            </label>
-          </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+        </div>
       </div>
   </div>
 </body>
