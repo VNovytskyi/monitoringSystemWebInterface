@@ -1,4 +1,13 @@
 $(document).ready(function(){
+  $("#load-card").fadeOut(800, () => {
+    $("#load-card").addClass("d-none")
+    $("#main-card").fadeIn()
+  })
+
+  //For debug
+  /*$("#load-card").addClass("d-none")
+  $("#main-card").addClass("d-block")*/
+
   function setSSIDerror(description) {
     $("#ssid-label").addClass("border-danger")
     $("#ssid-input").addClass("border-danger")
@@ -145,6 +154,15 @@ $(document).ready(function(){
     console.log("Mode: " + wifiMode)
     console.log("SSID: " + ssid)
     console.log("PASS:" + pass)
+
+    $("#apply-button").addClass("d-none")
+    $("#load-button").removeClass("d-none")
+
+    $("#superuser-name-input").prop("disabled", true);
+    $("#su-pass-input").prop("disabled", true);
+    $('input[name=wifi-mode-radiogroup]').attr("disabled",true);
+    $("#ssid-input").prop("disabled", true);
+    $("#pass-input").prop("disabled", true);
   })
   
   // Check SSID on 'input' event
@@ -193,9 +211,11 @@ $(document).ready(function(){
   
   $('input[type=radio][name=wifi-mode-radiogroup]').change(function() {
     if(this.value == "ap") {
-      $("#wifi-input").fadeOut()
+      //$("#wifi-input").fadeOut()
+      $("#wifi-input").slideUp()
     } else {
-      $("#wifi-input").fadeIn()
+     // $("#wifi-input").fadeIn()
+      $("#wifi-input").slideDown()
     }
     clearSSIDerror()
     clearPasswordError()

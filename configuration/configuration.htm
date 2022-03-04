@@ -14,11 +14,15 @@
   <script type="text/javascript" src="configuration.js"></script>
   
 </head>
-<body>
-  <div class="container" style="min-height: 100vh">
-      <div class="d-flex justify-content-center align-items-center pt-5 pb-5" style="min-height: 100vh">
-        <div class="card" style="width: 400px;">
-          
+<body class="user-select-none">
+  <div class="container" style="min-height: 100vh" >
+      <div class="d-flex justify-content-center align-items-center pt-5 pb-5" style="min-height: 100vh;">
+        
+        <div id="load-card" class="d-flex justify-content-center align-items-center" style="width: 400px">
+            <div class="spinner-border text-primary"></div>
+        </div>
+        
+        <div id="main-card" class="card" style="width: 400px; display: none;">
           <div class="card-header ">
             <h4 class="card-title d-flex justify-content-center">Basic configuration</h4>
           </div>
@@ -60,15 +64,15 @@
               </div>
             </div>
 
-            <div id="wifi-input" class="mb-3 mt-3" style="display: none;">
-              <div class="input-group mb-3">
+            <div id="wifi-input" style="display: none;">
+              <div class="input-group mb-3 mt-3">
                 <span id="ssid-label" class="input-group-text" style="width: 70px;">SSID</span>
                 <input id="ssid-input" type="text" class="form-control" placeholder="Enter name of access point">
                 <div id="ssid-error-block" class="invalid-feedback">
                   <div id="ssid-error-description"></div>
                 </div>
               </div>
-              <div class="input-group mb-3">
+              <div class="input-group">
                 <span id="pass-label" class="input-group-text" style="width: 70px;">PASS</span>
                 <input id="pass-input" type="password" class="form-control" placeholder="Enter password of access point">
                 <div id="pass-error-block" class="invalid-feedback">
@@ -79,10 +83,16 @@
 
             <hr>
 
-            <div class="input-group mt-1 justify-content-center">
+            <div class="input-group justify-content-center">
               <button id="apply-button" type="submit" class="btn btn-primary" style="width: 100px;">Apply</button>
             </div>
-            
+
+            <div class="input-group justify-content-center">
+              <button id="load-button" class="btn btn-primary d-none" disabled>
+                <span class="spinner-border spinner-border-sm"></span> Loading...
+              </button>
+            </div>
+
           </div>
         </div>
       </div>
