@@ -19,17 +19,17 @@
           <div class="card-body">
             <h5 class="card-title d-flex">Super user</h5>
             <div class="input-group mb-3">
-              <span id="name-label" class="input-group-text" style="width: 70px;">Name</span>
-              <input id="name-input" type="text" class="form-control" placeholder="Enter name of super user">
-              <div id="name-error-block" class="invalid-feedback">
-                <div id="name-error-description"></div>
+              <span id="superuser-name-label" class="input-group-text" style="width: 70px;">Name</span>
+              <input id="superuser-name-input" type="text" class="form-control" placeholder="Enter name of super user">
+              <div id="superuser-error-block" class="invalid-feedback">
+                <div id="superuser-error-description"></div>
               </div>
             </div>
             <div class="input-group mb-4">
-              <span id="name-label" class="input-group-text" style="width: 70px;">PASS</span>
-              <input id="name-input" type="text" class="form-control" placeholder="Enter password of super user">
-              <div id="name-error-block" class="invalid-feedback">
-                <div id="name-error-description"></div>
+              <span id="su-pass-label" class="input-group-text" style="width: 70px;">PASS</span>
+              <input id="su-pass-input" type="password" class="form-control" placeholder="Enter password of super user">
+              <div id="su-pass-error-block" class="invalid-feedback">
+                <div id="su-pass-error-msg"></div>
               </div>
             </div>
             <hr>
@@ -128,31 +128,98 @@
     return {type: "", title: ""}
   }
 
+  function setUserNameError(description) {
+    $("#superuser-name-label").addClass("border-danger")
+    $("#superuser-name-input").addClass("border-danger")
+    $("#superuser-error-block").addClass("d-block")
+    $("#superuser-error-description").text(description)
+  }
+
+  function clearUserNameError() {
+    $("#superuser-name-label").removeClass("border-danger")
+    $("#superuser-name-input").removeClass("border-danger")
+    $("#superuser-error-block").removeClass("d-block")
+  }
+
+  function checkSuperuserName(str) {
+    if (str.length < 1 || str.length > 32) {
+      return "Wrong super user name length. Available: 1-32"
+    }
+
+    if (/^[!#;].|[+\[\]/"\t\s].*$/.test(str)) {
+      return "Detected forbidden symbol in super user name"
+    }
+
+    return ""
+  }
+
+  function setSuperUserPasswordError(description) {
+    $("#su-pass-label").addClass("border-danger")
+    $("#su-pass-input").addClass("border-danger")
+    $("#su-pass-error-block").addClass("d-block")
+    $("#su-pass-error-msg").text(description)
+  }
+
+  function clearSuperUserPasswordError() {
+    $("#su-pass-label").removeClass("border-danger")
+    $("#su-pass-input").removeClass("border-danger")
+    $("#su-pass-error-block").removeClass("d-block")
+  }
+
+  function checkSuperUserPassword(str) {
+    if (str.length < 1 || str.length > 32) {
+      return "Wrong super user password length. Available: 1-32"
+    }
+
+    return ""
+  }
+
   // Apply form fields
   $("#apply-button").on("click", () => {
+    const superUserName = $("#superuser-name-input").val()
+    const superUserPass = $("#su-pass-input").val()
+
     const ssid = $("#ssid-input").val()
     const pass = $("#pass-input").val()
+
     const wifiMode = $("input[name='wifi-mode-radiogroup']:checked")[0].value
 
+    let error = ''
     let failed = false
 
     if (wifiMode != "ap") {
-      const error = checkSSIDname(ssid)
+      error = checkSSIDname(ssid)
       if (error.length) {
         setSSIDerror(error)
         failed = true
       }
 
-      const passError = checkPassword(pass);
-      if (passError.title.length) {
-        setPasswordError(passError.title)
+      error = checkPassword(pass);
+      if (error.title.length) {
+        setPasswordError(error.title)
         failed = true
       }
+    }
+
+    error = checkSuperuserName(superUserName)
+    if (error.length) { 
+      setUserNameError(error)
+      failed = true
+    }
+
+    error = checkSuperUserPassword(superUserPass)
+    if (error.length) {
+      setSuperUserPasswordError(error)
+      failed = true
     }
 
     if (failed) {
       return
     }
+
+    console.log("[Superuser]")
+    console.log("NAME: " + superUserName)
+    console.log("PASS: " + superUserPass)
    
     console.log("[Wifi]")
     console.log("Mode: " + wifiMode)
@@ -182,6 +249,28 @@
     }
   })
 
+  // Check superuser name on 'input' event
+  $("#superuser-name-input").on("input", () => {
+    const name = $("#superuser-name-input").val()
+    let error = checkSuperuserName(name)
+    if (error.length) { 
+      setUserNameError(error)
+    } else {
+      clearUserNameError()
+    }
+  })
+
+  // Check superuser password on 'input' event
+  $("#su-pass-input").on("input", () => {
+    const name = $("#su-pass-input").val()
+    let error = checkSuperUserPassword(name)
+    if (error.length) { 
+      setSuperUserPasswordError(error)
+    } else {
+      clearSuperUserPasswordError()
+    }
+  })
+
   $('input[type=radio][name=wifi-mode-radiogroup]').change(function() {
     if(this.value == "ap") {
       $("#wifi-input").fadeOut()
@@ -191,4 +280,5 @@
     clearSSIDerror()
     clearPasswordError()
   })
+
 </script>
