@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  $("#load-card").fadeOut(800, () => {
+  $("#load-card").delay(700).fadeOut(600, () => {
     $("#load-card").addClass("d-none")
     $("#main-card").fadeIn()
   })
